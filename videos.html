@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Aman Saves The World.</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+        <style>
+            #vheader{
+    width: 100%;
+    height: 100vh;
+    background-image: url("img/t1.jpg");
+    background-size: cover;
+    box-shadow: 0px 0px 60px 12px;
+    vertical-align: middle;
+    display: table;
+}
+#vheader p{
+    font-size: 40pt;
+    margin: 0 auto;
+    color: white;
+    font-family: titlefont;
+    position: relative;
+    display: table-cell;
+    vertical-align: middle;
+    
+}
+#main{
+    
+    margin: 0 auto;
+    text-align: center;
+    font-family: Neou-Thin;
+    font-size: 14pt;
+    
+}
+#main img#thumb{
+    box-shadow:0px 0px 20px #cecece;
+    width: 78%;
+}
+#plyrView{
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 99;
+    display: none;
+    background: rgba(0,0,0,0.9);
+    position: fixed;
+    
+}
+#uVid{
+    width: 70%;
+    height: 80%;
+    position: relative;
+    background-color: #fefefe;
+    padding: 0;
+    margin: 0 auto;
+    display: inline-block;
+    vertical-align: middle;
+}
+#plyrView:before{
+    content: "";
+    display: inline-block;
+    vertical-align: middle;
+    width: 0;
+    /* adjust for white space between pseudo element and next sibling */
+    margin-right: -.25em;
+    /* stretch line height */
+    height: 100%;
+}
+.close {
+  color: red;
+  position: absolute;
+  top: 10px;
+  right: 25px;
+  font-size: 35px;
+  font-weight: bold;
+}
+.close:hover,#thumb:hover,#thumb:focus,
+.close:focus {
+  color: #999;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+#thumbWrap{
+    display: table;
+    width: 230px;
+    float: left;
+    padding-left: 45px;
+}
+        </style>
+    </head>
+    <body>
+        <div id="vheader">
+            <p>VIDEOS</p>
+        </div>
+        <div ng-app="utube" ng-controller="utubeCtrl" id="main" >
+            
+            <!-- video player Modal-->
+            <div id="plyrView">
+                <iframe id="uVid" ng-src=""></iframe>
+                <span class="close cursor" ng-click="closeModal()">&times;</span>
+            </div>
+            
+            <!-- list of youtube videos from the channel are desplayed like thumbnails, when one is clicked it will pass the index to the modal and the modal will be displayed-->
+            <div id="block3"></div>
+                <div id="thumbWrap" ng-repeat="itm in response.items" ng-if="itm.id.kind === 'youtube#video'">
+                    <a ng-click="startPlayer($index)">
+                        <img id="thumb" src="{{itm.snippet.thumbnails.high.url}}"/>
+                    </a>
+                    <h2>{{itm.snippet.title}}</h2>
+                    <p>{{itm.snippet.description}}</p>
+                </div>            
+            <div id="block3"></div>
+            <div id="block3"></div>
+        </div>
+        <script src="getVideos.js"></script>
+    </body>
+</html>
